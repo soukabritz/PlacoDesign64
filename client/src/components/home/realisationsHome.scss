@@ -1,0 +1,212 @@
+// Style mobile first pour le slider de réalisations
+.realisations-slider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 1rem 0;
+}
+
+.slider-btn {
+  background: #f5f5f5;
+  border: none;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  font-size: 1.5rem;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  cursor: pointer;
+  transition: background 0.2s;
+  &:hover {
+    background: #e0e0e0;
+  }
+}
+
+.slider-item {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 90vw;
+}
+
+.slider-img {
+  width: 100%;
+  max-width: 340px;
+  height: auto;
+  border-radius: 16px;
+  object-fit: cover;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+}
+
+.slider-caption {
+  margin-top: 0.7rem;
+  text-align: center;
+  h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+  }
+  p {
+    font-size: 0.98rem;
+    color: #555;
+    margin: 0;
+  }
+}
+
+// Version desktop (grille) à compléter plus tard
+.realisations-grid {
+  display: none;
+}
+
+.realisations-home-section {
+  width: 100%;
+  margin: 2rem 0 1.5rem 0;
+  overflow-x: hidden;
+}
+
+.realisations-home-wrapper {
+  width: 100%;
+  box-sizing: border-box;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.realisations-home-title {
+  text-align: left;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 1.1rem;
+  letter-spacing: 0.01em;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+// Slider horizontal mobile
+.realisations-scroll {
+  display: flex;
+  flex-direction: row;
+  gap: 1.1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding-left: 0;
+  padding-right: 0;
+  padding-bottom: 0.5rem;
+  scrollbar-width: none; /* Firefox */
+}
+.realisations-scroll::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+.realisation-slide:first-child {
+  margin-left: 0;
+}
+.realisation-slide:last-child {
+  margin-right: 0;
+}
+.realisation-slide {
+  min-width: 260px;
+  max-width: 320px;
+  flex: 0 0 auto;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  scroll-snap-align: start;
+}
+.slide-img-wrapper {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.slide-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0;
+  display: block;
+}
+.slide-caption {
+  padding: 0.7rem 0.8rem 0.8rem 0.8rem;
+  text-align: center;
+  h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+  }
+  p {
+    font-size: 0.97rem;
+    color: #555;
+    margin: 0;
+  }
+}
+
+// Grille desktop
+@media (min-width: 768px) {
+  .realisations-slider {
+    display: none;
+  }
+  .realisations-scroll {
+    display: none;
+  }
+  .realisations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2rem;
+    padding: 0 1rem;
+  }
+  .grid-item {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .slide-img-wrapper {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: #f5f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .grid-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0;
+    display: block;
+  }
+  .grid-caption {
+    padding: 1rem;
+    text-align: center;
+    h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+    p {
+      font-size: 0.98rem;
+      color: #555;
+      margin: 0;
+    }
+  }
+} 

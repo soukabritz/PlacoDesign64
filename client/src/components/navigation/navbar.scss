@@ -1,0 +1,135 @@
+@use '../../styles/variables' as *;
+
+// mixins pour réutiliser les styles dbase
+@mixin navbar-base {
+  position: fixed;
+  left: 0;
+  right: 0;
+  background-color: $color-white;
+  display: flex;
+  z-index: 1000;
+}
+
+.top-navbar {
+  @include navbar-base;
+  top: 0;
+  height: $navbar-height;
+  box-shadow: $shadow-sm;
+  justify-content: center;
+  align-items: center;
+  padding: 0 $spacing-base;
+}
+
+.bottom-navbar {
+  @include navbar-base;
+  bottom: 0;
+  height: $navbar-height-mobile;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.desktop-navbar {
+  display: none; // Caché par défaut sur mobile
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: $color-text-light;
+  text-decoration: none;
+  font-size: $font-size-sm;
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: $spacing-sm 0;
+
+  i {
+    font-size: $font-size-xl;
+    margin-bottom: 4px;
+  }
+
+  span {
+    font-size: $font-size-xs;
+    text-align: center;
+  }
+}
+
+.logo {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+
+  img {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+    max-width: none;
+  }
+}
+
+@media (min-width: $breakpoint-md) {
+  .top-navbar,
+  .bottom-navbar {
+    display: none; // Cache les barres de navigation mobile
+  }
+
+  .desktop-navbar {
+    @include navbar-base;
+    display: flex;
+    top: 0;
+    height: $navbar-height;
+    box-shadow: $shadow-sm;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 $spacing-lg;
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      margin-left: 8rem;
+    }
+
+    .nav-right {
+      display: flex;
+      gap: $spacing-lg;
+      align-items: center;
+    }
+  }
+
+  .nav-link {
+    color: $color-text-light;
+    text-decoration: none;
+    font-size: $font-size-base;
+    font-weight: 500;
+    transition: $transition-fast;
+
+    &:hover {
+      color: $color-primary;
+    }
+  }
+
+  .logout-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    font: inherit;
+  }
+}
+
+main {
+  padding-top: $navbar-height-mobile;
+  padding-bottom: $navbar-height-mobile;
+
+  @media (min-width: $breakpoint-md) {
+    padding-top: $navbar-height;
+    padding-bottom: 0;
+  }
+} 
