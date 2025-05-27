@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useAuth } from '../../authContext';
+import React, { useEffect, useState, useRef } from 'react';
+import { useAuth } from '../../hooks/useAuth';
 import RealisationForm from './RealisationForm';
 import './realisationsPage.scss';
 
@@ -13,6 +13,10 @@ const RealisationsPage = () => {
   const [error, setError] = useState('');
   const [deleteId, setDeleteId] = useState(null);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const touchStartX = useRef(null);
+  const touchEndX = useRef(null);
 
   const fetchRealisations = async () => {
     try {
@@ -27,6 +31,33 @@ const RealisationsPage = () => {
   useEffect(() => {
     fetchRealisations();
   }, []);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+  const handleTouchMove = (e) => {
+    touchEndX.current = e.touches[0].clientX;
+  };
+  const handleTouchEnd = () => {
+    if (touchStartX.current !== null && touchEndX.current !== null) {
+      const delta = touchStartX.current - touchEndX.current;
+      if (Math.abs(delta) > 50) {
+        if (delta > 0) {
+          setLightboxIndex((lightboxIndex + 1) % realisations.length);
+        } else {
+          setLightboxIndex((lightboxIndex - 1 + realisations.length) % realisations.length);
+        }
+      }
+    }
+    touchStartX.current = null;
+    touchEndX.current = null;
+  };
 
   const handleAdd = async (formData) => {
     setIsLoading(true);
@@ -56,11 +87,6 @@ const RealisationsPage = () => {
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const handleEdit = (real) => {
-    setEditReal(real);
-    setShowEditModal(true);
   };
 
   const handleEditSubmit = async (formData) => {
@@ -94,11 +120,6 @@ const RealisationsPage = () => {
     }
   };
 
-  const handleDelete = (id) => {
-    setDeleteId(id);
-    setShowDeleteConfirm(true);
-  };
-
   const confirmDelete = async () => {
     setIsLoading(true);
     setError('');
@@ -122,17 +143,24 @@ const RealisationsPage = () => {
     }
   };
 
+  const homeCount = realisations.filter(r => r.showOnHome).length;
+
   return (
     <div className="realisations-page-container">
-      <h2 className="realisations-title">Nos réalisations</h2>
-      {isAuth && (
-        <button className="add-btn" onClick={() => setShowAddModal(true)}>Ajouter une réalisation</button>
-      )}
+      <div className="realisations-header">
+        <h2 className="realisations-title">Nos réalisations</h2>
+        {isAuth && (
+          <button className="add-btn" onClick={() => setShowAddModal(true)}>
+            Ajouter une réalisation
+          </button>
+        )}
+      </div>
       {showAddModal && (
         <RealisationForm
           onSubmit={handleAdd}
           onClose={() => setShowAddModal(false)}
           isLoading={isLoading}
+          homeCount={homeCount}
         />
       )}
       {showEditModal && editReal && (
@@ -141,6 +169,7 @@ const RealisationsPage = () => {
           onClose={() => { setShowEditModal(false); setEditReal(null); }}
           initialValues={editReal}
           isLoading={isLoading}
+          homeCount={homeCount}
         />
       )}
       {showDeleteConfirm && (
@@ -155,23 +184,42 @@ const RealisationsPage = () => {
         </div>
       )}
       {error && <div className="form-error" style={{textAlign:'center',marginBottom:'1rem'}}>{error}</div>}
-      <div className="realisations-list">
-        {realisations.map((real) => (
-          <div key={real._id} className="realisation-card">
-            <img src={real.imageUrl} alt={real.titre} className="realisation-img" />
-            <div className="realisation-info">
-              <h3>{real.titre}</h3>
-              {real.description && <p>{real.description}</p>}
+      <div className="realisations-grid-wrapper">
+        <div className="realisations-list realisations-grid-4">
+          {realisations.map((real, idx) => (
+            <div key={real._id} className="realisation-card realisation-grid-item">
+              <div className="realisation-img-wrapper" onClick={() => setLightboxIndex(idx)} style={{cursor:'pointer'}}>
+                <img src={real.imageUrl} alt={real.titre} className="realisation-img" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      {lightboxIndex !== null && (
+        <div
+          className="lightbox-overlay"
+          {...(isMobile ? {
+            onTouchStart: handleTouchStart,
+            onTouchMove: handleTouchMove,
+            onTouchEnd: handleTouchEnd
+          } : {})}
+        >
+          <div className="lightbox-content lightbox-content-large">
+            <button className="lightbox-close" onClick={() => setLightboxIndex(null)}>&times;</button>
+            <img src={realisations[lightboxIndex].imageUrl} alt={realisations[lightboxIndex].titre} className="lightbox-img" />
+            <div className="lightbox-caption">
+              <h3>{realisations[lightboxIndex].titre}</h3>
+              {realisations[lightboxIndex].description && <p>{realisations[lightboxIndex].description}</p>}
               {isAuth && (
-                <div className="admin-actions">
-                  <button className="edit-btn" onClick={() => handleEdit(real)}>Modifier</button>
-                  <button className="delete-btn" onClick={() => handleDelete(real._id)}>Supprimer</button>
+                <div className="admin-actions" style={{marginTop:'1.2rem', display:'flex', gap:'0.7rem', justifyContent:'center'}}>
+                  <button className="edit-btn" onClick={() => { setEditReal(realisations[lightboxIndex]); setShowEditModal(true); setLightboxIndex(null); }}>Modifier</button>
+                  <button className="delete-btn" onClick={() => { setDeleteId(realisations[lightboxIndex]._id); setShowDeleteConfirm(true); setLightboxIndex(null); }}>Supprimer</button>
                 </div>
               )}
             </div>
           </div>
-        ))}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

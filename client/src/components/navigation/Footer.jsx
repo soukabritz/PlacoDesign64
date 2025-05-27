@@ -15,9 +15,9 @@ const Footer = () => {
         <div className="footer-col footer-col-left">
           <img src={logo} alt="Logo Placo Design 64" className="footer-logo" />
           <div className="footer-info">
-            <a href="tel:0974561112" className="footer-phone">
+            <a href="tel:0665052999" className="footer-phone">
               <FaPhoneAlt style={{ marginRight: '0.5em', verticalAlign: 'middle' }} />
-              <span>09 74 56 11 12</span>
+              <span>06 65 05 29 99</span>
             </a>
           </div>
         </div>

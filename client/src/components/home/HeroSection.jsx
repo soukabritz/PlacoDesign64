@@ -17,7 +17,7 @@ const HeroSection = () => {
               <i className="fas fa-envelope"></i> Contactez-nous
             </button>
             <button className="phone-btn">
-              <i className="fas fa-phone"></i> 09 74 56 11 12
+              <i className="fas fa-phone"></i> 06 65 05 29 99
             </button>
           </div>
         </div>

@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 
-const RealisationForm = ({ onSubmit, onClose, initialValues = {}, isLoading }) => {
+const RealisationForm = ({ onSubmit, onClose, initialValues = {}, isLoading, homeCount = 0 }) => {
   const [titre, setTitre] = useState(initialValues.titre || '');
   const [description, setDescription] = useState(initialValues.description || '');
   const [image, setImage] = useState(null);
   const [showOnHome, setShowOnHome] = useState(initialValues.showOnHome || false);
   const [error, setError] = useState('');
+
+  const isEditingHome = initialValues._id && initialValues.showOnHome;
+  const homeLimitReached = homeCount >= 6 && !isEditingHome;
 
   const handleImageChange = (e) => {
     setImage(e.target.files[0]);
@@ -19,6 +22,10 @@ const RealisationForm = ({ onSubmit, onClose, initialValues = {}, isLoading }) =
     }
     if (!initialValues._id && !image) {
       setError('L\'image est obligatoire');
+      return;
+    }
+    if (showOnHome && homeLimitReached) {
+      setError('Il y a déjà 6 réalisations en avant sur la page d\'accueil. Veuillez en retirer une avant d\'en ajouter une nouvelle.');
       return;
     }
     setError('');
@@ -36,7 +43,11 @@ const RealisationForm = ({ onSubmit, onClose, initialValues = {}, isLoading }) =
         <label>Image {initialValues._id ? '(laisser vide pour ne pas changer)' : '*'}</label>
         <input type="file" accept="image/*" onChange={handleImageChange} />
         <label className="checkbox-label">
-          <input type="checkbox" checked={showOnHome} onChange={e => setShowOnHome(e.target.checked)} />
+          <input
+            type="checkbox"
+            checked={showOnHome}
+            onChange={e => setShowOnHome(e.target.checked)}
+          />
           Mettre en avant sur la page d'accueil
         </label>
         {error && <div className="form-error">{error}</div>}

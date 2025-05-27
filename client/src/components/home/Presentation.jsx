@@ -9,10 +9,11 @@ const Presentation = () => (
         Engagez Placo Design 64 pour tous vos projets de <b>rénovation</b> et d'aménagement. Nous intervenons sur l'ensemble du <b>Pays Basque</b> pour&nbsp;:
       </p>
       <ul>
+        <li>Les travaux de <b>plâtrerie</b></li>
         <li>La création et la rénovation de <b>cuisines sur mesure</b></li>
         <li>L'aménagement de <b>salles de bains</b></li>
         <li>La pose de <b>cloisons</b>, de <b>revêtements de sols</b> et de <b>murs</b></li>
-        <li>Les travaux de <b>plâtrerie</b>, <b>peinture</b>, <b>menuiserie</b> et <b>carrelage</b></li>
+        <li>La <b>peinture</b>, <b>menuiserie</b> et <b>carrelage</b></li>
       </ul>
       <p>
         Notre équipe vous accompagne de la <b>conception</b> à la <b>réalisation</b>, en vous proposant des <b>solutions personnalisées</b> et adaptées à vos besoins.

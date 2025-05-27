@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../authContext';
+import { useAuth } from '../../hooks/useAuth';
 import ReCAPTCHA from 'react-google-recaptcha';
 import './login.scss';
 
@@ -46,7 +46,7 @@ const Login = () => {
       
       if (response.ok) {
         await checkAuth();
-        navigate('/dashboard');
+        navigate('/');
       } else {
         setError(data.message || 'Erreur de connexion');
       }

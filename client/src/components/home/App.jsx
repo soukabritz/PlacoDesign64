@@ -35,6 +35,14 @@ function App() {
             <Route path="/services/cuisine" element={<Cuisine />} />
             <Route path="/services/revetement" element={<Revetement />} />
             <Route path="/services/terrasse" element={<Terrasse />} />
+            <Route
+              path="/dashboard"
+              element={
+                <PrivateRoute>
+                  {/* Votre Dashboard ici */}
+                </PrivateRoute>
+              }
+            />
           </Routes>
         </main>
         <Footer />
@@ -43,4 +51,4 @@ function App() {
   );
 }
 
-export default App;
+export default App; 

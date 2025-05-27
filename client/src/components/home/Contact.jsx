@@ -65,50 +65,63 @@ const Contact = () => {
   };
 
   return (
-    <div className="contact-container">
-      <h2>Contact</h2>
-      <form className="contact-form" onSubmit={handleSubmit}>
-        <div className="row">
-          <div className="form-group">
-            <label>Nom</label>
-            <input type="text" name="nom" value={form.nom} onChange={handleChange} required />
+    <div className="contact-page-flex">
+      <div className="contact-intro-side">
+        <div className="contact-intro-icon">
+          <i className="fas fa-comments"></i>
+        </div>
+        <h3 className="contact-intro-title">Nous mettons toute notre expertise à votre service&nbsp;!</h3>
+        <p className="contact-intro-text">
+          Pour un devis, un prix ou un renseignement, nous vous invitons à nous contacter par le formulaire ci-dessous.<br />
+          Nous vous répondrons dans les plus brefs délais.<br /><br />
+          <strong>Notre équipe est à votre écoute pour répondre à toutes vos questions et vous accompagner dans vos projets de rénovation. N'hésitez pas à nous donner un maximum de détails pour un retour personnalisé&nbsp;!</strong>
+        </p>
+      </div>
+      <div className="contact-container">
+        <h2 className="contact-title">Contact</h2>
+        <form className="contact-form" onSubmit={handleSubmit}>
+          <div className="row">
+            <div className="form-group">
+              <label>Nom</label>
+              <input type="text" name="nom" value={form.nom} onChange={handleChange} required />
+            </div>
+            <div className="form-group">
+              <label>Prénom</label>
+              <input type="text" name="prenom" value={form.prenom} onChange={handleChange} required />
+            </div>
           </div>
           <div className="form-group">
-            <label>Prénom</label>
-            <input type="text" name="prenom" value={form.prenom} onChange={handleChange} required />
+            <label>Téléphone</label>
+            <input type="text" name="telephone" value={form.telephone} onChange={handleChange} required />
           </div>
-        </div>
-        <div className="form-group">
-          <label>Téléphone</label>
-          <input type="text" name="telephone" value={form.telephone} onChange={handleChange} required />
-        </div>
-        <div className="form-group">
-          <label>Email</label>
-          <input type="email" name="email" value={form.email} onChange={handleChange} required />
-        </div>
-        <hr />
-        <div className="form-group">
-          <label>Objet</label>
-          <input type="text" name="objet" value={form.objet} onChange={handleChange} required />
-        </div>
-        <div className="form-group">
-          <label>Précision</label>
-          <textarea name="precision" value={form.precision} onChange={handleChange} required rows={5} />
-        </div>
-        <div className="form-group checkbox-group">
-          <span className="checkbox-wrapper">
-            <input type="checkbox" name="consent" checked={form.consent} onChange={handleChange} id="consent" />
-          </span>
-          <span className="checkbox-text">
-            En soumettant ce formulaire, j'accepte que les informations saisies soient exploitées dans le cadre strict de ma demande.*
-            <br />
-            <a href="/politique-confidentialite" target="_blank" rel="noopener noreferrer">En savoir plus</a>
-          </span>
-        </div>
-        {error && <div className="error-message">{error}</div>}
-        {success && <div className="success-message">{success}</div>}
-        <button type="submit" disabled={loading}>{loading ? 'Envoi...' : 'Envoyer'}</button>
-      </form>
+          <div className="form-group">
+            <label>Email</label>
+            <input type="email" name="email" value={form.email} onChange={handleChange} required />
+          </div>
+          <hr />
+          <div className="form-group">
+            <label>Objet</label>
+            <input type="text" name="objet" value={form.objet} onChange={handleChange} required />
+          </div>
+          <div className="form-group">
+            <label>Précision</label>
+            <textarea name="precision" value={form.precision} onChange={handleChange} required rows={5} />
+          </div>
+          <div className="form-group checkbox-group">
+            <span className="checkbox-wrapper">
+              <input type="checkbox" name="consent" checked={form.consent} onChange={handleChange} id="consent" />
+            </span>
+            <span className="checkbox-text">
+              En soumettant ce formulaire, j'accepte que les informations saisies soient exploitées dans le cadre strict de ma demande.*
+              <br />
+              <a href="/politique-confidentialite" target="_blank" rel="noopener noreferrer">En savoir plus</a>
+            </span>
+          </div>
+          {error && <div className="error-message">{error}</div>}
+          {success && <div className="success-message">{success}</div>}
+          <button type="submit" disabled={loading}>{loading ? 'Envoi...' : 'Envoyer'}</button>
+        </form>
+      </div>
     </div>
   );
 };
